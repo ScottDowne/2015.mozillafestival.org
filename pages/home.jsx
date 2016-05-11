@@ -55,8 +55,8 @@ var Home = React.createClass({
         </HeroUnit>
         <div className="centered content wide">
           <h1>Help Make the Web a Better Place</h1>
-          <p>Receive festival news and updates by email</p>
-          <a href="https://ti.to/Mozilla/mozfest-2016" className="button"><span>Sign up</span></a>
+          <p>Share your ideas for improving the open Internet</p>
+          <Link to="proposals" className="button"><span>Submit a Proposal</span></Link>
         </div>
         <Footer/>
       </div>
