@@ -84,7 +84,7 @@ var InputCombo = React.createClass({
 });
 
 var Proposals = React.createClass({
-  otherInputClicked: function() {
+  /*otherInputClicked: function() {
     var checkbox = document.querySelector("#otherTheme");
     checkbox.checked = true;
     this.themeCheckboxClicked();
@@ -203,8 +203,46 @@ var Proposals = React.createClass({
         window.location.href = window.location.origin + window.location.pathname + "#submit-button";
       }
     });
+  },*/
+  getInitialState: function() {
+    return {
+      section: "one"
+    };
+  },
+  onSpaceClicked: function(e) {
+    var isExhibit = false;
+    if (e.target.id === "exhibit") {
+      isExhibit = true;
+    }
+    this.setState({
+      exhibit: isExhibit
+    });
+  },
+  onNext: function() {
+    if (this.state.exhibit) {
+      this.setState({
+        section: "exhibit"
+      });
+      return;
+    }
+    this.setState({
+      section: "desc"
+    });
   },
   render: function() {
+    var sectionOneClassName = "proposal-section section-1";
+    var sectionExhibitClassName = "proposal-section section-exhibit";
+    var sectionDescClassName = "proposal-section section-desc";
+    if (this.state.section === "one") {
+      sectionDescClassName += " hidden";
+      sectionExhibitClassName += " hidden";
+    } else if (this.state.section === "exhibit") {
+      sectionOneClassName += " hidden";
+      sectionDescClassName += " hidden";
+    } else if (this.state.section === "desc") {
+      sectionOneClassName += " hidden";
+      sectionExhibitClassName += " hidden";
+    }
     return (
       <div className="proposals-page">
         <Header/>
@@ -226,106 +264,194 @@ var Proposals = React.createClass({
 
             <p>We're looking forward to reviewing your submission. If you have any questions, please email <a href="mailto:festival@mozilla.org">festival@mozilla.org</a>.</p>
 
-            <InputCombo maxlength="120" errorMessage="Session name is required." for="sessionName" type="text">
-              Session Name *
-            </InputCombo>
+            <div className={sectionOneClassName}>
+              <InputCombo errorMessage="Full name is required." for="fullName" type="text">
+                Full Name *
+              </InputCombo>
+              <InputCombo errorMessage="Email is required." for="email" type="text">
+                Email *
+              </InputCombo>
+              <InputCombo for="organization" type="text">
+                Organization
+              </InputCombo>
+              <InputCombo for="otherFacilitators" type="text">
+                Other facilitators
+              </InputCombo>
+              <InputCombo for="twitter" type="text">
+                What's your Twitter handle?
+              </InputCombo>
 
-            <InputCombo errorMessage="First name is required." for="firstName" type="text">
-              First Name *
-            </InputCombo>
-            <InputCombo errorMessage="Surname is required." for="surname" type="text">
-              Surname *
-            </InputCombo>
-            <InputCombo errorMessage="Email is required." for="email" type="text">
-              Email *
-            </InputCombo>
+              <label id="">What Space are you submitting your proposal to? *</label>
+              <InputCombo onClick={this.onSpaceClicked} className="radio-input" for="digital" type="radio">
+                What i digital art?
+              </InputCombo>
+              <InputCombo onClick={this.onSpaceClicked} className="radio-input" for="localisation" type="radio">
+                Localisation
+              </InputCombo>
+              <InputCombo onClick={this.onSpaceClicked} className="radio-input" for="science" type="radio">
+                Science
+              </InputCombo>
+              <InputCombo onClick={this.onSpaceClicked} className="radio-input" for="journalism" type="radio">
+                Journalism
+              </InputCombo>
+              <InputCombo onClick={this.onSpaceClicked} className="radio-input" for="demystify" type="radio">
+                Demystify the Web
+              </InputCombo>
+              <InputCombo onClick={this.onSpaceClicked} className="radio-input" for="exhibit" type="radio">
+                Moz Ex (exhibit)
+              </InputCombo>
+              <InputCombo onClick={this.onSpaceClicked} className="radio-input" for="cities" type="radio">
+                A tale of two cities - the dilemmas of shared connected spaces.
+              </InputCombo>
 
-            <InputCombo for="organization" type="text">
-              Organization
-            </InputCombo>
-            <InputCombo for="twitter" type="text">
-              What's your Twitter handle?
-            </InputCombo>
-            <InputCombo for="otherFacilitators" type="text">
-              Other facilitators
-            </InputCombo>
+              <button className="button" id="next-button" ref="nextButton" onClick={this.onNext}>Next <Icon spin name="spinner"/></button>
+            </div>
 
-            <InputCombo wordcount="150" errorMessage="Description is required." for="description" type="textarea">
-              What will your session or activity allow people to make, learn or do? Describe your session's goals in 150 words or less. *
-            </InputCombo>
-            <InputCombo wordcount="150" errorMessage="Agenda is required." for="agenda" type="textarea">
-              How do you see that working? Describe your session's agenda in 150 words or less. Please also describe the format of the session, such as workshop, fireside chat or other. *
-            </InputCombo>
-            <InputCombo wordcount="150" errorMessage="Participants is required." for="participants" type="textarea">
-              How will you accommodate varying numbers of participants in your session? Tell us what you'll do with 5 participants. 15? 50? In 150 words or less. *
-            </InputCombo>
-            <InputCombo wordcount="150" errorMessage="Outcome is required." for="outcome" type="textarea">
-              What do you see as outcomes after the festival? How will you and your participants take the learning and activities forward? In 150 words or less. *
-            </InputCombo>
+            <div className={sectionExhibitClassName}>
+              <InputCombo errorMessage="Title is required." for="" type="text">
+                Title of Piece *
+              </InputCombo>
+              <InputCombo errorMessage="Method is required." for="" type="text">
+                Method *
+              </InputCombo>
+              <InputCombo errorMessage="Link is required." for="" type="text">
+                Link to see your work *
+              </InputCombo>
 
-            <label id="theme">Which topics are relevant for your session? You can choose multiple items. *</label>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="advocacyTheme" type="checkbox">
-              Advocacy
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="citizenshipTheme" type="checkbox">
-              Citizenship
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="dataTheme" type="checkbox">
-              Data
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="inclusionTheme" type="checkbox">
-              Inclusion
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="economicsTheme" type="checkbox">
-              Economics
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="environmentTheme" type="checkbox">
-              Environment
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="ethicsandValuesTheme" type="checkbox">
-              Ethics and Values
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="journalismTheme" type="checkbox">
-              Journalism
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="leadershipTheme" type="checkbox">
-              Leadership
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="openPracticesTheme" type="checkbox">
-              Open Practices
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="placeTheme" type="checkbox">
-              Place
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="privacyTheme" type="checkbox">
-              Privacy
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="scienceTheme" type="checkbox">
-              Science
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="sustainabilityTheme" type="checkbox">
-              Sustainability
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="userControlTheme" type="checkbox">
-              User Control
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="webLiteracyTheme" type="checkbox">
-              Web Literacy
-            </InputCombo>
-            <InputCombo onClick={this.themeCheckboxClicked} className="checkbox-input theme-checkbox" for="youthTheme" type="checkbox">
-              Youth
-            </InputCombo>
-            <InputCombo onClick={this.otherCheckboxClicked} className="checkbox-input theme-checkbox" for="otherTheme" type="checkbox">
-              Other: <input onClick={this.otherInputClicked} className="other-theme-input" type="text"/>
-            </InputCombo>
-            <div id="theme-other-error-message" className="error-message">Other cannot be empty.</div>
-            <div id="theme-error-message" className="error-message">At least one theme is required.</div>
+              <InputCombo wordcount="150" errorMessage="Description is required." for="" type="textarea">
+                Describe your work in 150 words or less. *
+              </InputCombo>
 
-            <InputCombo errorMessage="You must agree to our privacy policy." className="checkbox-input" for="privacyPolicy" type="checkbox">
-              I&lsquo;m okay with Mozilla handling my info as explained in this <a href="https://www.mozilla.org/en-US/privacy/">Privacy Policy</a>.
-            </InputCombo>
-            <button className="button full-width" id="submit-button" ref="submitButton" onClick={this.onSubmit}>Submit <Icon spin name="spinner"/></button>
-            <div id="generic-error" className="error-message">Uh oh! There's an unknown error with your session proposal. Please try again later, or email <a href="mailto:festival@mozilla.org ">festival@mozilla.org</a> for help.</div>
+              <InputCombo errorMessage="Field is required." for="" type="text">
+                What will your work allow people to learn and reflect on? *
+              </InputCombo>
+
+              <InputCombo errorMessage="Field is required." for="" type="text">
+                Why do you think Mozfest is a good place to show your work? *
+              </InputCombo>
+
+              <label id="">Anything you submit must be your own original work. If your content contains other’s material (e.g. images, video, music, etc) you must have obtained the necessary permissions to use the material. Alongside the use of your work at MozFest 2016, the Digital Learning team at Tate will select artworks to feature in a pop-up show-case as part of the Tate Exchange programme. Your content will not be used for commercial purposes but we may use your content to promote our platform or project using social media, websites, and other web-platforms. Copyright in your contribution will remain with you and this permission is not exclusive, so you can continue to use the material in any way including allowing others to use it, including licensing that material to other websites. *
+Please confirm you agree to these terms by ticking the box below. If you don't agree with these terms but would like to speak to a member of the team, please contact us at festival@mozilla.org</label>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Yes
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                No
+              </InputCombo>
+
+              <label id="">Is there another space you believe this exhibit could be shown within? *</label>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                What is digital art?
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Localisation
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Science
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Journalism
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Mozilla Learning
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                IOT
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                NO
+              </InputCombo>
+
+
+              <InputCombo errorMessage="You must agree to our privacy policy." className="checkbox-input" for="privacyPolicy" type="checkbox">
+                I&lsquo;m okay with Mozilla handling my info as explained in this <a href="https://www.mozilla.org/en-US/privacy/">Privacy Policy</a>.
+              </InputCombo>
+              <button className="button full-width" id="submit-button" ref="submitButton" onClick={this.onSubmit}>Submit <Icon spin name="spinner"/></button>
+              <div id="generic-error" className="error-message">Uh oh! There's an unknown error with your session proposal. Please try again later, or email <a href="mailto:festival@mozilla.org ">festival@mozilla.org</a> for help.</div>
+            </div>
+
+            <div className={sectionDescClassName}>
+
+              <InputCombo wordcount="150" errorMessage="Field is required." for="" type="textarea">
+                Describe what your session or activity will allow people to make, learn or do in 150 words or less. *
+              </InputCombo>
+
+              <InputCombo wordcount="150" errorMessage="Field is required." for="" type="textarea">
+                Describe how you see that working in 150 words or less. *
+              </InputCombo>
+
+              <label id="">MozFest accepts a lot of different formats for submissions please choose a format below that most likely fits your proposal *</label>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Demo - 15 minute showcase of completed work or product
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Learning Lab - 60 minute session where the audience both learns and interacts with others
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Fireside chat - 45 minute talk with time for questions and answers
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Design sprint- 2-3 hour workshop dedicated hands-on making, hacking and producing 'a thing'
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Other: <input onClick={function() {}} className="" type="text"/>
+              </InputCombo>
+
+              <InputCombo errorMessage="Field is required." for="" type="text">
+                How will you accommodate varying numbers of participants in your session? Tell us what you'll do with 3 participants. 15? 25?
+              </InputCombo>
+
+              <InputCombo errorMessage="Field is required." for="" type="text">
+                How will you accommodate varying numbers of participants in your session? Tell us what you'll do with 3 participants. 15? 25?
+              </InputCombo>
+              <InputCombo wordcount="150" errorMessage="Outcome is required." for="outcome" type="textarea">
+                What do you see as outcomes after the festival? How will you and your participants take the learning and activities forward? In 150 words or less. *
+              </InputCombo>
+
+              <InputCombo for="" type="text">
+                Are you comfortable leading your session in another language? If yes, please outline below
+              </InputCombo>
+
+              <label id="">MozFest offers limited places for travel sponsorship (travel stipend) covering flights and accommodation over the festival weekend. Please choose an option below if you wish to be considered for a travel stipend *</label>
+              <InputCombo onClick={function() {}} className="checkbox-input" for="" type="checkbox">
+                I can only attend MozFest if I receive a travel stipend covering my travel and accommodation
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="checkbox-input" for="" type="checkbox">
+                I would like to considered for a travel stipend but my attendance is not soley relient on receiving one
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="checkbox-input" for="" type="checkbox">
+                I do not require a travel stipend
+              </InputCombo>
+
+              <label id="">If your session is not accepted in your preferred Space is there another space you would like your session to be considered within? *</label>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                What is digital art?
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Localisation
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Science
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Journalism
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                Mozilla Learning
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                IOT
+              </InputCombo>
+              <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
+                NO
+              </InputCombo>
+
+              <InputCombo errorMessage="You must agree to our privacy policy." className="checkbox-input" for="privacyPolicy" type="checkbox">
+                I&lsquo;m okay with Mozilla handling my info as explained in this <a href="https://www.mozilla.org/en-US/privacy/">Privacy Policy</a>.
+              </InputCombo>
+              <button className="button full-width" id="submit-button" ref="submitButton" onClick={this.onSubmit}>Submit <Icon spin name="spinner"/></button>
+              <div id="generic-error" className="error-message">Uh oh! There's an unknown error with your session proposal. Please try again later, or email <a href="mailto:festival@mozilla.org ">festival@mozilla.org</a> for help.</div>
+            </div>
           </div>
         </div>
         <Footer/>
