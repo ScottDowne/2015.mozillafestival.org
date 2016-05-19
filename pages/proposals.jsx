@@ -283,7 +283,7 @@ var Proposals = React.createClass({
 
               <label id="">What Space are you submitting your proposal to? *</label>
               <InputCombo onClick={this.onSpaceClicked} className="radio-input" for="digital" type="radio">
-                What i digital art?
+                What is digital art?
               </InputCombo>
               <InputCombo onClick={this.onSpaceClicked} className="radio-input" for="localisation" type="radio">
                 Localisation
@@ -304,7 +304,7 @@ var Proposals = React.createClass({
                 A tale of two cities - the dilemmas of shared connected spaces.
               </InputCombo>
 
-              <button className="button" id="next-button" ref="nextButton" onClick={this.onNext}>Next <Icon spin name="spinner"/></button>
+              <button className="button full-width" id="next-button" ref="nextButton" onClick={this.onNext}>Next <Icon spin name="spinner"/></button>
             </div>
 
             <div className={sectionExhibitClassName}>
@@ -331,7 +331,7 @@ var Proposals = React.createClass({
               </InputCombo>
 
               <label id="">Anything you submit must be your own original work. If your content contains other’s material (e.g. images, video, music, etc) you must have obtained the necessary permissions to use the material. Alongside the use of your work at MozFest 2016, the Digital Learning team at Tate will select artworks to feature in a pop-up show-case as part of the Tate Exchange programme. Your content will not be used for commercial purposes but we may use your content to promote our platform or project using social media, websites, and other web-platforms. Copyright in your contribution will remain with you and this permission is not exclusive, so you can continue to use the material in any way including allowing others to use it, including licensing that material to other websites. *
-Please confirm you agree to these terms by ticking the box below. If you don't agree with these terms but would like to speak to a member of the team, please contact us at festival@mozilla.org</label>
+Please confirm you agree to these terms by ticking the box below. If you don't agree with these terms but would like to speak to a member of the team, please contact us at festival@mozilla.org.</label>
               <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
                 Yes
               </InputCombo>
@@ -359,7 +359,7 @@ Please confirm you agree to these terms by ticking the box below. If you don't a
                 IOT
               </InputCombo>
               <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
-                NO
+                None
               </InputCombo>
 
 
@@ -409,18 +409,18 @@ Please confirm you agree to these terms by ticking the box below. If you don't a
               </InputCombo>
 
               <InputCombo for="" type="text">
-                Are you comfortable leading your session in another language? If yes, please outline below
+                Are you comfortable leading your session in another language? If yes, please outline below:
               </InputCombo>
 
               <label id="">MozFest offers limited places for travel sponsorship (travel stipend) covering flights and accommodation over the festival weekend. Please choose an option below if you wish to be considered for a travel stipend *</label>
               <InputCombo onClick={function() {}} className="checkbox-input" for="" type="checkbox">
-                I can only attend MozFest if I receive a travel stipend covering my travel and accommodation
+                I can only attend MozFest if I receive a travel stipend covering my travel and accommodation.
               </InputCombo>
               <InputCombo onClick={function() {}} className="checkbox-input" for="" type="checkbox">
-                I would like to considered for a travel stipend but my attendance is not soley relient on receiving one
+                I would like to considered for a travel stipend but my attendance is not soley relient on receiving one.
               </InputCombo>
               <InputCombo onClick={function() {}} className="checkbox-input" for="" type="checkbox">
-                I do not require a travel stipend
+                I do not require a travel stipend.
               </InputCombo>
 
               <label id="">If your session is not accepted in your preferred Space is there another space you would like your session to be considered within? *</label>
@@ -443,7 +443,7 @@ Please confirm you agree to these terms by ticking the box below. If you don't a
                 IOT
               </InputCombo>
               <InputCombo onClick={function() {}} className="radio-input" for="" type="radio">
-                NO
+                None
               </InputCombo>
 
               <InputCombo errorMessage="You must agree to our privacy policy." className="checkbox-input" for="privacyPolicy" type="checkbox">
